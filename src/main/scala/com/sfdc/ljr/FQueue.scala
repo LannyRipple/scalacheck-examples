@@ -67,6 +67,6 @@ object FQueue {
 
   def apply[A](as: A*): FQueue[A] = FQueue(as.toList)
 
-  def isValid(in: FQueue[Int]): Boolean =
+  def doesNotContainTheAnswer(in: FQueue[Int]): Boolean =
     !(in.feed ++ in.pool).contains(42)
 }

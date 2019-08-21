@@ -44,14 +44,14 @@ class FQueueSpec extends WordSpec with Matchers with Checkers with GeneratorDriv
 
     // Automatic failure minimization
     "full" should {
-      "be valid" ignore {
+      "not contain The Answer" ignore {
         forAll(Gen.listOf(Gen.choose(0, 100))) { ins: List[Int] =>
             if (ins.contains(42))
               println(s"!! $ins")
             else
               println(ins)
 
-            FQueue.isValid(empty[Int] ++ ins) shouldBe true
+            FQueue.doesNotContainTheAnswer(empty[Int] ++ ins) shouldBe true
           }
       }
     }
