@@ -33,7 +33,10 @@ class FQueueSpec extends WordSpec with Matchers with Checkers with GeneratorDriv
 
           // Without this filter iterator.size would throw Exception
           whenever(ins.nonEmpty) {
-            (empty[Int] ++ ins).iterator.size shouldBe ins.length
+            val fqueue = empty[Int] ++ ins
+
+            fqueue.iterator.nonEmpty shouldBe true
+            fqueue.iterator.next shouldBe ins.head
           }
         }
       }

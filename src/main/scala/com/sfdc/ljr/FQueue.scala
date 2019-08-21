@@ -36,20 +36,19 @@ case class FQueue[+A](feed: List[A], pool: List[A] = List.empty[A]) {
 
   def +[B >: A](in: B): FQueue[B] = add(in)
 
-  def add[B >: A](in: TraversableOnce[B]): FQueue[B] =
+  def addMany[B >: A](in: TraversableOnce[B]): FQueue[B] =
     if (isEmpty)
       FQueue(in.toList)
     else
       FQueue(feed, in.toList ++ pool)
 
-  def ++[B >: A](in: TraversableOnce[B]): FQueue[B] = add(in)
+  def ++[B >: A](in: TraversableOnce[B]): FQueue[B] = addMany(in)
 
-  def shift: Option[(A, FQueue[A])] = {
-    if (isEmpty)
+  def shift: Option[(A, FQueue[A])] = feed match {
+    case Nil =>
       Option.empty[(A, FQueue[A])]
-    else {
-      val a :: nfeed: List[A] = feed
 
+    case a :: nfeed =>
       val nfqueue =
         if (feed.nonEmpty)
           FQueue(nfeed, pool)
@@ -57,7 +56,6 @@ case class FQueue[+A](feed: List[A], pool: List[A] = List.empty[A]) {
           FQueue(nfeed, feed)  // we know feed isEmpty
 
       Option(a -> nfqueue)
-    }
   }
 
   def iterator: Iterator[A] = (feed ++ pool.reverse).iterator
