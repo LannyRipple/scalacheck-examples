@@ -1,5 +1,10 @@
 # ScalaCheck by Example
 
+This repository can be found at:
+```
+git@git.soma.salesforce.com:lripple/scalacheck-examples.git
+```
+
 ScalaCheck is a property tester that uses random data generation to allow you to
 check that properties about your code hold in the precence of different kinds of
 data.  (E.g. List reverse does not grow or shrink the list.)
